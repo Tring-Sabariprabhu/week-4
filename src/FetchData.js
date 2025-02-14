@@ -1,7 +1,7 @@
 import {useEffect , useState} from 'react';
 import axios from 'axios';
 import { Card } from './Card';
-import { CardList } from './CardList';
+
 export const FetchData=()=>{
     const [data, setData] = useState(null);
     const [ loading , setLoading] = useState(true);
