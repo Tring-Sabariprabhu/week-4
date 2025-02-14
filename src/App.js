@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { FetchData } from './FetchData';
+import { Form } from './Form';
 function App() {
   return (
     //  <div className="App">
@@ -20,7 +20,7 @@ function App() {
     //   </header> 
       
     // </div>
-    <FetchData/>
+    <Form/>
   );
 }
 
