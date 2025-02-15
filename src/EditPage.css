@@ -1,0 +1,143 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+button{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-transform: uppercase;
+    
+}
+.EditPage{
+    /* background-color:   aquamarine; */
+    height: 125vh;
+}
+.Image_container{
+    /* background-image: url('./Images/Banner.png'); */
+    padding: 2% ;
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    /* background-color: aliceblue; */
+    height: 45vh;
+}
+.Image_container > .Content > .title{
+    font-size: 1.2vw;
+}
+.Image_container > .Content > .personaName{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5vw;
+    font-weight: 500;
+}
+.Image_container > .editImageBtn{
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7vw;
+    padding: 0.8% 2% 0.8% 2%;
+}
+.Image_container > .editImageBtn {
+    
+    font-size: 0.9vw;
+    padding: 1% 1%;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    border-radius: 8%;
+    outline: none;
+    border: none;
+}
+.Input_container{
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 2% 1.5%;
+    /* row-gap:1%; */
+    column-gap: 4%;
+}
+.Input_container > .Input{
+    display: flex;
+    flex-direction: column;
+    padding: 1% 0% ;
+    background-color: transparent;
+    min-height: 40vh;
+    max-height: 55vh;
+}
+.Input_container > .Input > label{
+    color: rgba(51, 51, 51, 0.816);
+    font-size: 1.1vw;
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.Input_container > .Input > textarea{
+    font-size: 1vw;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    min-width: 28vw;
+    max-width: 30vw;
+    /* min-height: 35vh; */
+    /* max-height: 35vh; */
+    outline: none;
+    background-color: transparent;
+    /* background-color: rgba(152, 146, 146, 0.285); */
+    border-radius: 1%;
+    border: none;
+    resize: none;
+}
+.Submit_container{
+    padding: 2% 3% 3% 3%;
+    width: 100%;
+    background-color: beige;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+/* .Submit_container > .RightSide , .Submit_container > .LeftSide{
+    display: flex;
+}
+
+.Submit_container > .RightSide{
+    padding: 0 6%;
+    background-color: aqua;
+}
+
+.Submit_container > .RightSide > button , .Submit_container > .LeftSide > button{
+    
+    font-size: 1.2vw;
+    background-color: white;
+    padding: 10% 15%;
+    border: none;
+    margin-right: 20%;
+    font-weight: 700;
+}
+.Submit_container > .LeftSide > button{
+    text-transform: uppercase;
+    background-color: transparent;
+    color: red;
+} */
+
+.EditImagePopup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30vw;
+    height: 50vh;
+    position: fixed;
+    top: 25%;
+    left: 35%;
+    border-radius: 5%;
+    background-color: wheat;
+}
+
+.EditImagePopup > button{
+    width: 5vw;
+}
