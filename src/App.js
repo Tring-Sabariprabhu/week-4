@@ -1,33 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-import { Home } from './Home';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Personas } from './Personas';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { EditPage } from './EditPage';
+import { Home } from './Home';
+import LoginForm from './Loginform';
+import SignupForm from './SignupForm';
+
 function App() {
+  
   return (
     <>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */} 
-      {/* <SamplePersona/> */}
+    
       <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/edit" element={<EditPage />} />
+            <Route path="/" element={<Home/>} />
+            <Route path="/persona" element={<Personas />} />
+            <Route path="/editpage/:status" element={<EditPage />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<SignupForm />} />
           </Routes>
       </Router>
-      
+        
     </>
   );
 }

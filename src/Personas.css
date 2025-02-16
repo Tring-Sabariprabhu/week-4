@@ -1,0 +1,188 @@
+
+.CardListPage{
+    height: 100vh;
+}
+.Header{
+    background-color: white;
+    height: 14%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1% 3%;
+    /* border-bottom: 0.10vw solid rgb(171, 169, 169); */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.Header > div{
+    /* background-color: aqua; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    height: 100%;
+}
+.Header > .buttons{
+    width: 100%;
+    justify-content: end;
+}
+.Header > .buttons > button{
+    padding: 0.8% 2%;
+    margin-left: 2%;
+    font-size: 1.2vw;
+}
+.Header > .logo > p{
+    color: rgb(12, 109, 139);
+    font-size: 1.8vw;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.AddButton{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 6%;
+    border: none;
+    font-weight: 500;
+    font-size: 1.12vw;
+    padding: 3% 6% 3.5% 6%;
+    /* margin-top: 2%; */
+    /* margin-left: 2%; */
+}
+
+.AddButton:hover{
+    /* background-color: rgba(25, 179, 226, 0.818); */
+}
+
+nav{
+    display: flex;
+    width: 100%;
+    padding: 0.5% 0 0.5% 3%;
+}
+nav > a{
+    color: rgb(12, 109, 139);
+    font-weight: 400;
+    font-size: 1.2vw;
+    margin-right: 2%;
+    text-decoration: none;
+}
+.bottom_container{
+    background-color: white;
+    /* margin-top: %; */
+    border-radius: 1%;
+    margin:  5% 15% 0 15%;
+    padding: 1.4% 3% 3% 2%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.bottom_container > .button{
+    padding: 0.5% 1%;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: aqua; */
+    
+    /* padding: 0.5% 0 2.5% 2%; */
+}
+.bottom_container > .button > p{
+    /* color: rgb(66, 58, 58); */
+    font-size: 1.3vw;
+    
+    /* font-weight: 450; */
+    color: rgba(51, 51, 51, 0.816);
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* background-color: beige; */
+    font-weight: 500;
+}
+.bottom_container > .button > button{
+    color: rgb(12, 109, 139);
+    padding: 1% 1% 1% 0 ;
+    background-color: transparent;
+    /* background-color: aqua; */
+    font-size: 1.14vw;
+}
+.CardList{
+    padding-top: 2%;
+    /* background-color: black; */
+    height: 46vh;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+.CardList > div{
+    cursor: pointer;
+}
+  .CardList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .CardList > .DefaultCard{
+    border-radius: 2%;
+    min-width: 22vw;
+    background-color: rgba(128, 128, 128, 0.129);
+    border: 1px solid #6a676736;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 9% 13% ;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
+}
+ 
+.CardList > .DefaultCard > .circle {
+    width: 56px;
+    height: 56px;
+    background: #f5f5f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ddd;
+  }
+  
+  .CardList > .DefaultCard > .circle > span {
+    color: #6a6767;
+    font-size: 3vw;
+    font-weight: bold;
+  }
+  
+  .CardList > .DefaultCard > .text {
+    padding: 12% 16%;
+    color: #6a6767;
+    font-size: 1.8vw;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 8px;
+    
+  }
+.CardList > .Card{
+    margin-right: 3%;
+    border-radius: 2%;
+    min-width: 22vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #6a676736;
+    /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
+    /* background-color: tomato; */
+}
+
+  
+.Card > div{
+    height: 50%;    
+}
+.Card > .div1{
+    border-top-left-radius: 3%;
+    border-top-right-radius: 3%;
+    
+    background-color: rgb(186, 182, 182);
+}
+    .Card > .div2{
+        /* background-color: aqua; */
+        background-color: rgba(211, 212, 212, 0.444);
+        padding: 6% 10%;
+        border-bottom-left-radius: 3%;
+        border-bottom-right-radius: 3%;
+        
+    }
+.Card > .div2 > .CardName{
+    /* background-color: aqua; */
+    color: rgb(51, 51, 51);
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 4vh;
+    /* background-color: beige; */
+    font-weight: 900;
+    font-size: 1.2vw;
+}
