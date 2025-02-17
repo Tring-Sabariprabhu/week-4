@@ -23,6 +23,9 @@ function LoginForm() {
     else if(localStorage.getItem(data.email)){
       const User = JSON.parse(localStorage.getItem(data.email));
       if(data.password === User.password){
+
+        const updatedUser = { ...User, loggedIn: true };
+          localStorage.setItem(data.email, JSON.stringify(updatedUser));
           alert("User is Valid");
           setUser( {name : (data.name), email: (data.email)})
           navigate('/');

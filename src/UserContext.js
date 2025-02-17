@@ -5,13 +5,13 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [ user, setUser ] = useState({ name: null, email: null });
   const [ personas, setPersonas] = useState([]);
+  
   const [ editPersonaKey, setEditPersonaKey ] = useState(null);
-//   const [ TEMP_Persona , setTEMP_Persona] = useState({name: null, image: null});
+
 
 
   const SetEditPersonaKey = (index)=>{
     setEditPersonaKey(index);
-    
   }
  
   const deletePersona = (index) => {

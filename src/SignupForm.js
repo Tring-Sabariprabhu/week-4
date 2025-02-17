@@ -22,9 +22,9 @@ function SignupForm() {
       alert("Email Already exist");
     }
     else{
-      const Obj = {name: data.name, password: data.password};
+      const Obj = {name: data.name, password: data.password, loggedIn: true};
       localStorage.setItem(data.email, JSON.stringify(Obj));
-      // const Obj2 = JSON.parse(localStorage.getItem(data.email));
+      const Obj2 = JSON.parse(localStorage.getItem(data.email));
       // console.log(Obj2.password);
       setUser({name : (data.name), email : (data.email)})
       alert("User details Registered");

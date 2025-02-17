@@ -11,10 +11,13 @@ export const Personas=()=>{
 
     const SavePersonaIndex=(index)=>{
         SetEditPersonaKey(index);                      
-        // Save Index for Editing Persona
-
-        navigate('/editpage/edit');
+          navigate('/editpage/edit');
     }
+    // const SavePersonaIndex = (index) => {
+    //     SetEditPersonaKey(index);                      
+    //     navigate(`/editpage/edit/${index}`); // Pass key in URL
+    // };
+    
     return(
 
         <div className='CardListPage'>
@@ -37,23 +40,22 @@ export const Personas=()=>{
                 </div>
                 <div className='CardList' >
 
+              
                     {personas.length > 0 && personas.map((persona, index) => (
-                    <div key={index} className="Card"
-                        onClick={()=>SavePersonaIndex(index)}
-                        >
-                        <div className="div1" 
-                             style={{
-                                background: persona.image ? `url(${persona.image}) center/100% no-repeat` : "white"
-                              }}
-                            >
-                            {/* <button onClick={()=>SavePersonaIndex(index)}>Edit</button> */}
-                        </div>
-                        <div className="div2">
-                            <div className="CardName">
-                                <p>{persona.name}</p>
+                        <div key={index} className="Card" onClick={()=>SavePersonaIndex(index)}>
+                            <div className="div1"  style={{
+                                                        background: persona.image ? `url(${persona.image}) center/100% no-repeat` : "white"
+                                                    }}>
+                                {/* <button onClick={()=>SavePersonaIndex(index)}>Edit</button> */}
+                            </div>
+                            <div className="div2">
+                                <div className="Card_details">
+                                    <p className='name'>{persona.name}</p>
+                                    <p className='quote'>{persona.quote}</p>
+                                    <p></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     ))}
                     
                     <div className='DefaultCard' onClick={()=>navigate('/editpage/create')}>

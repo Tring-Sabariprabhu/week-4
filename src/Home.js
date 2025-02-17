@@ -10,11 +10,6 @@ export const Home=()=>{
     const params = useParams();
     const { user, setUser } = useContext(UserContext);
 
-    // const AfterClickLogout=()=>{
-    //     setUser({name: null, email: null});
-    //     navigate('/login');
-    // };  
-    
     return(
         
         <div className='HomePage CardListPage'>
@@ -41,9 +36,9 @@ export const Home=()=>{
                     </div>
             </div>
             
-            <div className='bottom_container'>
-                    <button className='button_color' onClick={()=>navigate('/persona')}>Go to Persona Page</button>
-            </div>
+            { user.email &&  <div className='bottom_container'>
+                                    <button className='button_color' onClick={()=>navigate('/persona')}>Go to Persona Page</button>
+                            </div> }
         </div>
         
     )
