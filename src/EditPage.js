@@ -78,11 +78,14 @@ export const EditPage=()=>{
                 <div className='Image_container' style={{backgroundImage: `url(${ImageSelected ? ImageSelected : DefaultImage})`,}}>
 
                 </div>
+                <button type='button' id='image_Browse_button' onClick={()=> document.getElementById('image_input').click()}> Browse</button>
                 <input
                         type="file"
                         // accept=".jpg,.jpeg,.png,.svg"
+                        id='image_input'
                         onChange={handleSelected}
                         accept="image/*"
+                        style={{display:"none"}}
                         // {...register("image", { required: "Image is required" })}
                     />
                 <div className='Buttons_container'>
@@ -123,7 +126,7 @@ export const EditPage=()=>{
         
         if(allowedExtensions.includes(ext) == false){
             setEditImageState(false);
-            alert("Invalid !!. Image file extensions are (.png, .jpg, .jpeg, .svg)");
+            alert("Invalid !!.  acceptable Image file Extensions are (.png, .jpg, .jpeg, .svg)");
         }
         else{
             setImageSelected(URL.createObjectURL(event.target.files[0]));   // Store Selected Image Temporary
@@ -132,7 +135,10 @@ export const EditPage=()=>{
     }
 
     const AfterClickSave=()=>{                          // After click Save in Image Preview
-        if(ImageSelected == SavedImage){
+        if(ImageSelected == null && SavedImage == null){
+            alert("No Image Selected");
+        }
+        else if(SavedImage && ImageSelected == SavedImage){
             alert("Selected Image is already exist");
         }
         else if(ImageSelected){

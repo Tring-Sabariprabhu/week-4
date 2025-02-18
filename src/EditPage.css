@@ -136,7 +136,7 @@
     width: 50%;
 }
 .Buttons_container > .LeftSide > button{    
-    font-size: 1.2vw;
+    font-size: 1.1vw;
     text-transform: uppercase;
     background-color: transparent;
     outline: none;
@@ -292,4 +292,15 @@
 .error_msg{
     color: red;
     font-weight: 400;
+}
+
+#image_Browse_button{
+    padding: 1.5% 2%;
+    margin-top: 2%;
+    margin-right: 70%;
+    /* text-transform: uppercase; */
+    background-color: rgba(0, 128, 6, 0.64);
+    color: white;
+    border: none;
+    border-radius: 5%;
 }
