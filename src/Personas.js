@@ -6,18 +6,14 @@ import { UserContext } from './UserContext';
 
 export const Personas=()=>{
     const navigate = useNavigate();
-    const {  personas, SetEditPersonaKey, editPersonaKey ,User} = useContext(UserContext);
+    const {  personas, SaveEditPersonaKey, editPersonaKey ,User} = useContext(UserContext);
 
 
-    const SavePersonaIndex=(index)=>{
-        SetEditPersonaKey(index);                      
-          navigate('/editpage/edit');
+    const SetPersonaIndex=(index)=>{
+        // SaveEditPersonaKey(index);                      
+          navigate(`/editpage/${index}`);
     }
-    // const SavePersonaIndex = (index) => {
-    //     SetEditPersonaKey(index);                      
-    //     navigate(`/editpage/edit/${index}`); // Pass key in URL
-    // };
-    
+
     return(
 
         <div className='CardListPage'>
@@ -32,21 +28,22 @@ export const Personas=()=>{
             </div>
             
             <div className='bottom_container'>
-                <div className='button'> 
+                <div className='Header'> 
                     <p>Persona</p>
                     <button className='AddButton' 
-                        // onClick={()=>navigate('/editpage/edit')}
-                        >+ Add Persona</button>
+                        onClick={()=>navigate('/editpage')}
+                        ><span>+</span> Add Persona</button>
                 </div>
                 <div className='CardList' >
-
+                   
               
                     {personas.length > 0 && personas.map((persona, index) => (
-                        <div key={index} className="Card" onClick={()=>SavePersonaIndex(index)}>
+                        <div key={index} className="Card" onClick={()=>SetPersonaIndex(index)}>
                             <div className="div1"  style={{
                                                         background: persona.image ? `url(${persona.image}) center/100% no-repeat` : "white"
                                                     }}>
                                 {/* <button onClick={()=>SavePersonaIndex(index)}>Edit</button> */}
+                                { persona.image==null && <p className='ImageNotFound'>No image</p>}
                             </div>
                             <div className="div2">
                                 <div className="Card_details">
@@ -57,13 +54,14 @@ export const Personas=()=>{
                             </div>
                         </div>
                     ))}
-                    
-                    <div className='DefaultCard' onClick={()=>navigate('/editpage/create')}>
-                        <p className='text'>Add</p>
-                        <div className='circle'>
-                            <span>+</span>
+                         <div className='DefaultCard ' onClick={()=>navigate('/editpage')}>
+                            <p className='text'>Add</p>
+                            <div className='circle'>
+                                <span>+</span>
+                            </div>
                         </div>
-                    </div>
+                    
+                   
                     
                     
                 </div>

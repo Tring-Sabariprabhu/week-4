@@ -1,18 +1,19 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [ user, setUser ] = useState({ name: null, email: null });
   const [ personas, setPersonas] = useState([]);
+  const [auth,setAuth]=useState(false);
   
-  const [ editPersonaKey, setEditPersonaKey ] = useState(null);
+  // const [ editPersonaKey, setEditPersonaKey ] = useState(null);
 
-
-
-  const SetEditPersonaKey = (index)=>{
-    setEditPersonaKey(index);
-  }
+ 
+  
+  // const SaveEditPersonaKey = (index)=>{
+  //   setEditPersonaKey(index);
+  // }
  
   const deletePersona = (index) => {
     const OldPersonas = personas;
@@ -22,6 +23,10 @@ export const UserProvider = ({ children }) => {
   const addPersona = (newPersona) => {
     setPersonas([...personas, newPersona]);         // Add new persona to the array
   };
+  const SettingAuth=(Boolvalue)=>{
+    setAuth(Boolvalue);
+  }
+
   return (
     <UserContext.Provider value={
         {   user,
@@ -29,9 +34,9 @@ export const UserProvider = ({ children }) => {
             personas,
             setPersonas,
             addPersona, 
-            editPersonaKey, 
-            SetEditPersonaKey,
-            deletePersona
+            deletePersona,
+            auth,
+            SettingAuth
             }
         }>
       {children}

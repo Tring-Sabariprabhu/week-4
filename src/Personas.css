@@ -2,7 +2,7 @@
 .CardListPage{
     height: 100vh;
 }
-.Header{
+.CardListPage > .Header{
     background-color: white;
     height: 14%;
     display: flex;
@@ -11,23 +11,23 @@
     /* border-bottom: 0.10vw solid rgb(171, 169, 169); */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
-.Header > div{
+.CardListPage > .Header > div{
     /* background-color: aqua; */
     display: flex;
     align-items: center;
     /* justify-content: space-between; */
     height: 100%;
 }
-.Header > .buttons{
+.CardListPage > .Header > .buttons{
     width: 100%;
     justify-content: end;
 }
-.Header > .buttons > button{
+.CardListPage >  .Header > .buttons > button{
     padding: 0.8% 2%;
     margin-left: 2%;
     font-size: 1.2vw;
 }
-.Header > .logo > p{
+.CardListPage > .Header > .logo > p{
     color: rgb(12, 109, 139);
     font-size: 1.8vw;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -43,9 +43,7 @@
     /* margin-left: 2%; */
 }
 
-.AddButton:hover{
-    /* background-color: rgba(25, 179, 226, 0.818); */
-}
+
 
 nav{
     display: flex;
@@ -64,10 +62,10 @@ nav > a{
     /* margin-top: %; */
     border-radius: 1%;
     margin:  5% 15% 0 15%;
-    padding: 1.4% 3% 3% 2%;
+    padding: 1.4% 2% 2% 2%;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
-.bottom_container > .button{
+.bottom_container > .Header{
     padding: 0.5% 1%;
     display: flex;
     justify-content: space-between;
@@ -75,7 +73,7 @@ nav > a{
     
     /* padding: 0.5% 0 2.5% 2%; */
 }
-.bottom_container > .button > p{
+.bottom_container > .Header > p{
     /* color: rgb(66, 58, 58); */
     font-size: 1.3vw;
     
@@ -85,12 +83,18 @@ nav > a{
     /* background-color: beige; */
     font-weight: 500;
 }
-.bottom_container > .button > button{
+.bottom_container > .Header > button{
+    text-align: center;
     color: rgb(12, 109, 139);
-    padding: 1% 1% 1% 0 ;
+    /* background-color: aqua; */
+    padding: 0% 1% 1% 0 ;
     background-color: transparent;
     /* background-color: aqua; */
     font-size: 1.14vw;
+}
+.bottom_container > .Header > button > span{
+    
+    font-size: 1.6vw;
 }
 .CardList{
     padding-top: 2%;
@@ -99,6 +103,7 @@ nav > a{
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
+    
 }
 .CardList > div{
     cursor: pointer;
@@ -110,42 +115,48 @@ nav > a{
   .CardList > .DefaultCard{
     border-radius: 2%;
     min-width: 22vw;
-    background-color: rgba(128, 128, 128, 0.129);
-    border: 1px solid #6a676736;
+    /* background-color: rgba(89, 87, 87, 0.103); */
+    background-color: transparent;
+    border: 2px solid #6a67672d;
     /* background-color: aqua; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding:  8%  12%;
+    margin-right: 3%;
+    padding:  9%  13%;
     /* justify-content: center; */
     /* align-items: center; */
     /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
 }
  
 .CardList > .DefaultCard > .circle {
-    width: 56px;
-    height: 56px;
+    width: 53px;
+    height: 55px;
     background: #f5f5f5;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #ddd;
+    border: 0px solid #6a676785;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    transform: rotate(130deg);
     margin-bottom: 24%;
   }
   
   .CardList > .DefaultCard > .circle > span {    /* Plus Symbol */
-    color: #6a6767;
-    font-size: 3vw;
-    /* font-weight: bold; */
+    /* color: #6a6767; */
+    color: #4e4c4ca1;
+    font-size: 2.5vw;
+    font-weight: 400;
+    transform: rotate(-130deg);
   }
   
-  .CardList > .DefaultCard > .text {
-    
-    color: #6a6767;
+  .CardList > .DefaultCard > .text {         /* 'Add'  */
+    color: #4e4c4cd3;
     font-size: 1.8vw;
     /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
-    margin: 0 0 0 7%;
+    margin: 0 0 0 5%;
     
   }
 .CardList > .Card{
@@ -155,7 +166,8 @@ nav > a{
     height: 100%;
     display: flex;
     flex-direction: column;
-    border: 1px solid #6a676736;
+    /* border: 1px solid #6a676736; */
+    border: 2px solid #6a676736;
     /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); */
     /* background-color: tomato; */
 }
@@ -165,15 +177,26 @@ nav > a{
     height: 50%;    
 }
 .Card > .div1{
+    padding: 0 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
     border-top-left-radius: 3%;
     border-top-right-radius: 3%;
-    
     background-color: rgb(186, 182, 182);
+}
+
+    
+.Card > .div1{
+    color: gray;
+    font-weight: 500;
+    font-size: 1.1vw;
 }
     .Card > .div2{
         /* background-color: aqua; */
         background-color: rgba(211, 212, 212, 0.444);
-        padding: 6% 10%;
+        padding: 4% 10%;
         border-bottom-left-radius: 3%;
         border-bottom-right-radius: 3%;
         
@@ -195,6 +218,7 @@ nav > a{
     font-size: 1.4vw;
 }
 .Card > .div2 > .Card_details > .quote{
-    color: rgb(51, 51, 51);
-    font-size: 1vw;
+    color: rgba(51, 51, 51, 0.844);
+    font-weight: 500;
+    font-size: 1.1vw;
 }

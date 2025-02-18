@@ -4,17 +4,28 @@ import './Personas.css';
 import './Home.css';
 import { UserContext } from './UserContext';
 import { useContext } from 'react';
+import { useEffect } from 'react';
 
 export const Home=()=>{
     const navigate = useNavigate();
-    const params = useParams();
-    const { user, setUser } = useContext(UserContext);
 
+    const { user, setUser} = useContext(UserContext); 
+
+    // useEffect(()=>{
+    // //     if(localStorage){
+    // //     const UserEmail = localStorage.getItem("loggedIn");
+    // //     if(UserEmail != null){
+    // //      const Userdetails = JSON.parse(localStorage.getItem(UserEmail));
+    // //         setUser( {name: Userdetails.name, email: UserEmail});        
+    // //   }}
+    //   },[]);
+
+    const AfterClickLogout=()=>{
+        setUser({email : null});
+    }
     return(
-        
         <div className='HomePage CardListPage'>
             <div className='Header'>
-                {console.log(params)}
                     <div className='logo'>
                         <p >tringapps</p>
                     </div>
@@ -27,8 +38,9 @@ export const Home=()=>{
                             </>
                             :
                             <>
+                            <p>{user.name ? "Username : " + user.name : "No user found"}</p>
                             <button className='button_color' 
-                                // onClick={()=>AfterClickLogout()}
+                                onClick={()=>AfterClickLogout()}
                                 >Logout</button>
                             </>
                         }
@@ -37,7 +49,7 @@ export const Home=()=>{
             </div>
             
             { user.email &&  <div className='bottom_container'>
-                                    <button className='button_color' onClick={()=>navigate('/persona')}>Go to Persona Page</button>
+                                    <button className='button_color' onClick={()=>navigate('/persona')}>Go to Persona Page </button>
                             </div> }
         </div>
         

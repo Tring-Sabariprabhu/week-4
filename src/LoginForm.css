@@ -70,7 +70,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 8% 18%;
+    padding: 8% 13%;
     /* background-color: aqua; */
   }
   .NewAcc > .redirect_tag{
@@ -79,7 +79,7 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
-    font-weight: 800;
+    font-weight: 500;
   }
   
   

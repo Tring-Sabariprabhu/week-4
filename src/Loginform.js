@@ -7,7 +7,7 @@ import { UserContext } from "./UserContext";
 
 function LoginForm() {
     const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);  
+    const { setUser, SettingAuth } = useContext(UserContext);  
   const {
     register,
     handleSubmit,
@@ -16,22 +16,24 @@ function LoginForm() {
 
   const onSubmit = (data) => {
     // console.log("Login Data:", data);
-
+    // localStorage.clear();
     if((localStorage.length == 0)){
       alert("Local storage is Empty, Go to Register!");
     }
     else if(localStorage.getItem(data.email)){
       const User = JSON.parse(localStorage.getItem(data.email));
       if(data.password === User.password){
-
-        const updatedUser = { ...User, loggedIn: true };
-          localStorage.setItem(data.email, JSON.stringify(updatedUser));
-          alert("User is Valid");
-          setUser( {name : (data.name), email: (data.email)})
+        // const updatedUser = { ...User, loggedIn: true };
+          // localStorage.setItem(data.email, JSON.stringify(updatedUser));
+          alert("Login Successful");
+          setUser({name : User.name, email : data.email});
+          console.log(User);
+          // SettingAuth(true);
+          // localStorage.setItem("loggedIn", data.email);
           navigate('/');
         }
       else{
-        alert("Password Wrong!!");
+        alert("Email found, but Password don't match");
         console.log(User.password);
       }
     }

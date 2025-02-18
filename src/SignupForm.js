@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
 function SignupForm() {
     const navigate = useNavigate();
-     const { setUser } = useContext(UserContext);  
+     const { setUser , SettingAuth } = useContext(UserContext);  
   const {
     register,
     handleSubmit,
@@ -19,15 +19,16 @@ function SignupForm() {
     // console.log("Signup Data:", data);
     
     if(localStorage && localStorage.getItem(data.email)){
-      alert("Email Already exist");
+      alert("Email is already exist! Go to Login");
     }
     else{
-      const Obj = {name: data.name, password: data.password, loggedIn: true};
+      const Obj = {name: data.name, password: data.password};
       localStorage.setItem(data.email, JSON.stringify(Obj));
-      const Obj2 = JSON.parse(localStorage.getItem(data.email));
+      // const Obj2 = JSON.parse(localStorage.getItem(data.email));
       // console.log(Obj2.password);
-      setUser({name : (data.name), email : (data.email)})
       alert("User details Registered");
+      setUser({name : data.name, email : data.email});
+      // SettingAuth(true);
       navigate('/');
     }
     
