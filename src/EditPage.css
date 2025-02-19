@@ -27,7 +27,7 @@
     padding: 1.5% 2% ;
     display: flex;
     justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.088);
+    background-color: rgba(0, 0, 0, 0.341);
 }
 .EditPage > .Image_container > .Input_Area > .Content > .title{               /* Title of Input */
     font-size: 1.2vw;
@@ -292,6 +292,7 @@
 .error_msg{
     color: red;
     font-weight: 400;
+    font-size: 1.2vw;
 }
 
 #image_Browse_button{

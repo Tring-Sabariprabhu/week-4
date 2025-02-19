@@ -1,18 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import tringapps from './Images/tringapps.svg';
 import './Personas.css';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from './UserContext';
 
 export const Personas=()=>{
     const navigate = useNavigate();
-    const {  personas, SaveEditPersonaKey, editPersonaKey ,User} = useContext(UserContext);
+    const { user,  personas, SaveEditPersonaKey, editPersonaKey ,User} = useContext(UserContext);
 
 
     const SetPersonaIndex=(index)=>{
         // SaveEditPersonaKey(index);                      
           navigate(`/editpage/${index}`);
     }
+    useEffect(()=>{
+        if(user.name == null){
+            navigate('/');
+        }
+    },[]);
 
     return(
 

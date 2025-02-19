@@ -16,7 +16,6 @@ function SignupForm() {
 
   const onSubmit = (data) => {
     // localStorage.clear();
-    // console.log("Signup Data:", data);
     
     if(localStorage && localStorage.getItem(data.email)){
       alert("Email is already exist! Go to Login");
@@ -24,11 +23,8 @@ function SignupForm() {
     else{
       const Obj = {name: data.name, password: data.password};
       localStorage.setItem(data.email, JSON.stringify(Obj));
-      // const Obj2 = JSON.parse(localStorage.getItem(data.email));
-      // console.log(Obj2.password);
       alert("User details Registered");
       setUser({name : data.name, email : data.email});
-      // SettingAuth(true);
       navigate('/');
     }
     
@@ -46,7 +42,15 @@ function SignupForm() {
         <label>Name:</label>
         <input
           type="text"
-          {...register("name", { required: "Name is required" })}
+          {...register("name", {                             
+            pattern: {
+              value: /^[A-Za-z\s]*$/,
+              message: "Name should only contain alphabets"
+            },
+            validate: {
+              requiredCheck: (value) =>   value?.length > 0 || "Name is required"
+            }
+          })} 
           className={errors.name ? "signup_input error-input" : "signup_input"}
         />
         {errors.name && <p className="error-message">{errors.name.message}</p>}

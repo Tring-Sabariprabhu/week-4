@@ -9,6 +9,7 @@ import { UserContext } from './UserContext';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
+
 export const EditPage=()=>{
     const navigate = useNavigate();
     
@@ -16,10 +17,10 @@ export const EditPage=()=>{
  
     const editPersonaKey = URLStatus.key == undefined ? undefined : Number.parseInt(URLStatus.key);      // Saving Persona key from the URL
     
-    const [ EditStatus, setEditStatus] = useState();                   // It declares Whether this page for Creation or Editing
+    const [ EditStatus, setEditStatus] = useState(false);                   // It declares Whether this page for Creation or Editing
     
     
-    const { User, personas, addPersona,  deletePersona } = useContext(UserContext);
+    const { user, personas, addPersona,  deletePersona } = useContext(UserContext);
     
 
     const [ SavedImage, setSavedImage] = useState(null);           // Storing Image using State
@@ -28,26 +29,27 @@ export const EditPage=()=>{
 
     const [ EditImageState, setEditImageState] = useState(false);    // For Edit Image popup
     const [ DeleteCardState, setDeleteCardState] = useState(false);  // For Delete Card popup
-    const [ personaData , setPersonaData ] = useState({ name: null, image: null, quote: null, description: null, attitudes: null, painpoints: null, jobs: null, activities: null});
-    // Storing All inputs using this State 
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
-        defaultValues: personaData
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+        defaultValues: { name: null, image: null, quote: null, description: null, attitudes: null, painpoints: null, jobs: null, activities: null}
     });
 
     useEffect( ()=>{
-        if(URLStatus.key == undefined){      // Create Persona 
+        if(user.name == null){
+            navigate('/');
+        }
+        else if(URLStatus.key == undefined){      // Create Persona 
             setEditStatus(false);
-            
         }
-        else if(personas.length == 0){      // what If User come for Edit and Refresh the Page 
-            navigate(-1);
-        }
+      
         else{                                       // Editing Persona 
             setEditStatus(true);                   
             const Prev_data = personas[editPersonaKey];   // Fetching Previous persona data   
-            setPersonaData(Prev_data);
-                          
+
+            Object.keys(Prev_data).forEach((key) => {
+                setValue(key, Prev_data[key]); // Update form fields
+              });
+
             if(Prev_data.image != null ){
                 setSavedImage(Prev_data.image);
             }    
@@ -55,6 +57,8 @@ export const EditPage=()=>{
        
     }, [URLStatus.key]);
 
+
+    
    
     
     const DeletePopup=()=>{          // Deleting Persona Confirmation
@@ -63,7 +67,7 @@ export const EditPage=()=>{
             <p>Do you want to Delete</p>
             <div className='Buttons_container'>
                     <div className='LeftSide'>
-                        
+
                     </div>
                     <div className='RightSide'>
                         <button type='button' className='Btn1' onClick={()=>setDeleteCardState(false)}>Cancel</button>
@@ -81,17 +85,16 @@ export const EditPage=()=>{
                 <button type='button' id='image_Browse_button' onClick={()=> document.getElementById('image_input').click()}> Browse</button>
                 <input
                         type="file"
-                        // accept=".jpg,.jpeg,.png,.svg"
                         id='image_input'
                         onChange={handleSelected}
                         accept="image/*"
                         style={{display:"none"}}
-                        // {...register("image", { required: "Image is required" })}
+                        
                     />
                 <div className='Buttons_container'>
                     <div className='LeftSide'>
                         {  (SavedImage!=null && SavedImage==ImageSelected ) &&
-                            <button type='button' className='Btn1' onClick={()=>SetImageRemoved()} >Remove</button>}
+                            <button type='button' className='Btn1' onClick={()=>SetImageRemoved()} >Delete</button>}
                     </div>
                     <div className='RightSide'>
                         <button type='button' onClick={()=>SetEditImgPopup(false)} className='Btn1'>Cancel</button>
@@ -150,37 +153,23 @@ export const EditPage=()=>{
         }
     }
 
-    const handleChange=(event)=>{                                    // Onchange Function for input Fields (text, textArea inputs)
-        // console.log('event',event?.target?.name, ':', event?.target?.value)         
-        setPersonaData({...personaData, [event?.target?.name] : event?.target?.value});
-    }
+  
   
     const handleQuillChange=(field, value)=>{                       // Onchange Function for RichTextArea inputs
-        setPersonaData({...personaData, [field] : value});
+        setValue(field, value);
+        
     }
  
     const onSubmit = (data) => {                                    // After Submitting form
-        
-        console.log(data);
+        // console.log(data);
         console.log("image : " + SavedImage);
-        if(personaData.name == "" || personaData.name == null)
-        {
-            alert("Persona Name is Required");
-        }
-        else if (EditStatus) {
-            personas[editPersonaKey].name = personaData.name;
-            
-            personas[editPersonaKey].image = SavedImage;
-            personas[editPersonaKey].quote = personaData.quote;                
-            personas[editPersonaKey].description = personaData.description;
-            personas[editPersonaKey].attitudes = personaData.attitudes;
-            personas[editPersonaKey].painpoints = personaData.painpoints;
-            personas[editPersonaKey].jobs = personaData.jobs;
-            personas[editPersonaKey].activities = personaData.activities;
+       
+        if (EditStatus) {
+            data.image = SavedImage;
+            personas[editPersonaKey] = data;
             navigate(-1);
             
         } else {
-            
             data.image = SavedImage;
             addPersona(data);
             navigate(-1);
@@ -215,14 +204,17 @@ export const EditPage=()=>{
                                 name='name'
                                 placeholder="Sample"
                                 {...register("name", {                             
-                                    pattern: {
+                                  pattern: {
                                     value: /^[A-Za-z\s]*$/,
-                                    message: 'Quote should only contain alphabets'
-                                }
-                            })} 
-                                value={(personaData.name)}
-                                onChange={handleChange}
-                                // onChange={()=>handleChange}
+                                    message: "Persona Name should only contain alphabets"
+                                  },
+                                  validate: {
+                                    requiredCheck: (value) =>   value?.length > 0 || "Persona Name is required"
+                                  }
+                                })} 
+                                value={watch("name") || ""}
+                                // onChange={handleChange}
+                                
                                 autoComplete="off"
                                 />
                             {errors.name && <span className='error_msg'>{errors.name.message}</span>} 
@@ -243,9 +235,9 @@ export const EditPage=()=>{
                             pattern: {
                                 value: /^[A-Za-z\s]*$/,
                                 message: 'Quote should only contain alphabets'
-                            }
+                            }   
                         })} 
-                        value={personaData.quote} onChange={handleChange}/>
+                        value={watch("quote") || ""}/>
                         {errors.quote && <span className='error_msg'>{errors.quote.message}</span>}
                 </div>
                 <div className='Input'>
@@ -257,7 +249,7 @@ export const EditPage=()=>{
                                 message: 'Description should only contain alphabets'
                             }
                         })}
-                        value={personaData.description} onChange={handleChange} />
+                        value={watch("description") || ""}/>
                         {errors.description && <span className='error_msg'>{errors.description.message}</span>}
                 </div>
                 <div className='Input'>
@@ -269,26 +261,28 @@ export const EditPage=()=>{
                                 message: 'Attitudes should only contain alphabets'
                             }
                         })} 
-                        value={personaData.attitudes} onChange={handleChange}/>
+                        value={watch("attitudes") || ""}/>
                         {errors.attitudes && <span className='error_msg'>{errors.attitudes.message}</span>}
                 </div>
                 <div className='Input react_quill'>
                     <label>Pain Points</label><br/>
-                    <ReactQuill theme="snow"   value={personaData.painpoints} 
+                    <ReactQuill theme="snow"   value={watch("painpoints") || ""}
                      placeholder='What are the biggest challenges that the persona faces in their job?' 
-                     onChange={(value)=>handleQuillChange("painpoints", value)}/>
+                     onChange={(value)=>handleQuillChange("painpoints", value)}
+                     />
+
                 </div>
                 <div className='Input react_quill'>
                     <label>Jobs / Needs </label><br/>
                      <ReactQuill  theme="snow" 
                      placeholder="What are the persona's functional, social and emotional needs to be successful at their job?" 
-                     value={personaData.jobs} onChange={(value)=>handleQuillChange("jobs", value)}/> 
+                     value={watch("jobs") || ""} onChange={(value)=>handleQuillChange("jobs", value)}/> 
                 </div>
                 <div className='Input react_quill'>
                     <label>Activities</label><br/>
                     <ReactQuill  theme="snow"   
                      placeholder='What does the persona like to do in their free time?' 
-                     value={personaData.activities} onChange={(value)=>handleQuillChange("activities", value)}/> 
+                     value={watch("activities") || ""} onChange={(value)=>handleQuillChange("activities", value)}/> 
                 </div>
             </div>
            

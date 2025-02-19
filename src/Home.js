@@ -11,14 +11,7 @@ export const Home=()=>{
 
     const { user, setUser} = useContext(UserContext); 
 
-    // useEffect(()=>{
-    // //     if(localStorage){
-    // //     const UserEmail = localStorage.getItem("loggedIn");
-    // //     if(UserEmail != null){
-    // //      const Userdetails = JSON.parse(localStorage.getItem(UserEmail));
-    // //         setUser( {name: Userdetails.name, email: UserEmail});        
-    // //   }}
-    //   },[]);
+   
 
     const AfterClickLogout=()=>{
         setUser({email : null});

@@ -15,21 +15,18 @@ function LoginForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    // console.log("Login Data:", data);
-    // localStorage.clear();
+    
     if((localStorage.length == 0)){
       alert("Local storage is Empty, Go to Register!");
     }
     else if(localStorage.getItem(data.email)){
       const User = JSON.parse(localStorage.getItem(data.email));
       if(data.password === User.password){
-        // const updatedUser = { ...User, loggedIn: true };
+      
           // localStorage.setItem(data.email, JSON.stringify(updatedUser));
           alert("Login Successful");
           setUser({name : User.name, email : data.email});
           console.log(User);
-          // SettingAuth(true);
-          // localStorage.setItem("loggedIn", data.email);
           navigate('/');
         }
       else{

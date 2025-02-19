@@ -5,12 +5,9 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [ user, setUser ] = useState({ name: null, email: null });
   const [ personas, setPersonas] = useState([]);
-  const [auth,setAuth]=useState(false);
   
   // const [ editPersonaKey, setEditPersonaKey ] = useState(null);
 
- 
-  
   // const SaveEditPersonaKey = (index)=>{
   //   setEditPersonaKey(index);
   // }
@@ -23,9 +20,6 @@ export const UserProvider = ({ children }) => {
   const addPersona = (newPersona) => {
     setPersonas([...personas, newPersona]);         // Add new persona to the array
   };
-  const SettingAuth=(Boolvalue)=>{
-    setAuth(Boolvalue);
-  }
 
   return (
     <UserContext.Provider value={
@@ -35,8 +29,7 @@ export const UserProvider = ({ children }) => {
             setPersonas,
             addPersona, 
             deletePersona,
-            auth,
-            SettingAuth
+            
             }
         }>
       {children}
