@@ -5,8 +5,8 @@
   /* transition: ease 0.6s; */
   
   font-family: "Poppins", serif;
-  font-weight: 500;
-  font-style: normal;
+  /* font-weight: 500; */
+  
   margin: 0;
   padding: 0;
 
@@ -22,7 +22,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
 }
-
 
 button{
   font-family: "Poppins", serif;
@@ -45,3 +44,22 @@ button{
   color: rgb(12, 109, 139);
   background-color: white;  
 }
+
+ /* .toast{
+  font-family: "Poppins", serif;
+  font-weight: 800;
+  font-style: normal; 
+ } */
+.Toastify__toast {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+  background-color: white !important; /* White text color */
+  color: #333333d8 !important; /* Dark background */
+  font-size: 16px;
+  border-radius: 10px;
+  
+}
+
+
+

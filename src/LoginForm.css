@@ -66,11 +66,11 @@
     cursor: pointer;
   }
   .NewAcc{
-    
+    font-size: 1.2vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 8% 13%;
+    padding: 8% 10%;
     /* background-color: aqua; */
   }
   .NewAcc > .redirect_tag{

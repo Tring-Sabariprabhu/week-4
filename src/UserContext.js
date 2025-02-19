@@ -6,11 +6,7 @@ export const UserProvider = ({ children }) => {
   const [ user, setUser ] = useState({ name: null, email: null });
   const [ personas, setPersonas] = useState([]);
   
-  // const [ editPersonaKey, setEditPersonaKey ] = useState(null);
-
-  // const SaveEditPersonaKey = (index)=>{
-  //   setEditPersonaKey(index);
-  // }
+ 
  
   const deletePersona = (index) => {
     const OldPersonas = personas;

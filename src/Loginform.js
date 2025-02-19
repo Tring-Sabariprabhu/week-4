@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
+import { makeToast } from "./MakeToast";
+
 
 function LoginForm() {
     const navigate = useNavigate();
@@ -15,27 +17,27 @@ function LoginForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    
+    // localStorage.clear();
     if((localStorage.length == 0)){
-      alert("Local storage is Empty, Go to Register!");
+      makeToast('Local storage is Empty, Go to Register!', 'info');
     }
-    else if(localStorage.getItem(data.email)){
+    else if(localStorage.getItem(data.email))
+    {
       const User = JSON.parse(localStorage.getItem(data.email));
       if(data.password === User.password){
       
           // localStorage.setItem(data.email, JSON.stringify(updatedUser));
-          alert("Login Successful");
+          makeToast('Login Successful', 'success');
           setUser({name : User.name, email : data.email});
           console.log(User);
-          navigate('/');
+          navigate('/persona');
         }
       else{
-        alert("Email found, but Password don't match");
-        console.log(User.password);
+        makeToast('Password Wrong', 'error');
       }
     }
     else{
-      alert("User Invalid!");
+      makeToast('This email not Registered', 'error');
     }
   };
 
@@ -72,7 +74,7 @@ function LoginForm() {
 
       <button type="submit" className="login-button button_color">Login</button>
       <div className="NewAcc">
-            <p>Haven't an Account?</p>
+            <p>Don't have an Account?</p>
             <Link to="/register" className="redirect_tag" >Register</Link>
       </div>
     </form>

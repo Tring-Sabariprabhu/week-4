@@ -6,12 +6,13 @@ import { UserContext } from './UserContext';
 
 export const Personas=()=>{
     const navigate = useNavigate();
-    const { user,  personas, SaveEditPersonaKey, editPersonaKey ,User} = useContext(UserContext);
+    const { user,  personas, User} = useContext(UserContext);
 
 
     const SetPersonaIndex=(index)=>{
-        // SaveEditPersonaKey(index);                      
-          navigate(`/editpage/${index}`);
+          navigate(`/editpage`, {
+            state: {index}
+          });
     }
     useEffect(()=>{
         if(user.name == null){
@@ -40,7 +41,6 @@ export const Personas=()=>{
                         ><span>+</span> Add Persona</button>
                 </div>
                 <div className='CardList' >
-                   
               
                     {personas.length > 0 && personas.map((persona, index) => (
                         <div key={index} className="Card" onClick={()=>SetPersonaIndex(index)}>

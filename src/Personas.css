@@ -62,11 +62,11 @@ nav > a{
     /* margin-top: %; */
     border-radius: 1%;
     margin:  5% 15% 0 15%;
-    padding: 1.4% 2% 2% 2%;
+    padding: 1.5%;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 .bottom_container > .Header{
-    padding: 0.5% 1%;
+    /* padding: 0.5% 1%; */
     display: flex;
     justify-content: space-between;
     /* background-color: aqua; */
@@ -87,14 +87,15 @@ nav > a{
     text-align: center;
     color: rgb(12, 109, 139);
     /* background-color: aqua; */
-    padding: 0% 1% 1% 0 ;
+    padding: 0% 1% 1% 0% ;
+    
     background-color: transparent;
     /* background-color: aqua; */
     font-size: 1.14vw;
 }
 .bottom_container > .Header > button > span{
     
-    font-size: 1.6vw;
+    /* font-size: 1.6vw; */
 }
 .CardList{
     padding-top: 2%;
@@ -130,16 +131,18 @@ nav > a{
 }
  
 .CardList > .DefaultCard > .circle {
-    width: 53px;
-    height: 55px;
+    /* width: 53px;
+    height: 55px; */
+    width: 3.9vw;
+    height: 10vh;
     background: #f5f5f5;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 0px solid #6a676785;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    border-top-width: 1.5px;
+    border-bottom-width: 1.5px;
     transform: rotate(130deg);
     margin-bottom: 24%;
   }
@@ -156,7 +159,7 @@ nav > a{
     color: #4e4c4cd3;
     font-size: 1.8vw;
     /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
-    margin: 0 0 0 5%;
+    margin: 0 0 0 3%;
     
   }
 .CardList > .Card{
@@ -195,7 +198,7 @@ nav > a{
 }
     .Card > .div2{
         /* background-color: aqua; */
-        background-color: rgba(211, 212, 212, 0.444);
+        background-color: rgba(172, 172, 172, 0.168);
         padding: 4% 10%;
         border-bottom-left-radius: 3%;
         border-bottom-right-radius: 3%;

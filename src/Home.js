@@ -5,16 +5,16 @@ import './Home.css';
 import { UserContext } from './UserContext';
 import { useContext } from 'react';
 import { useEffect } from 'react';
+import { makeToast } from './MakeToast';
 
 export const Home=()=>{
     const navigate = useNavigate();
 
-    const { user, setUser} = useContext(UserContext); 
-
-   
+    const { user, setUser} = useContext(UserContext);
 
     const AfterClickLogout=()=>{
         setUser({email : null});
+        makeToast('Logout Successfully', 'info');
     }
     return(
         <div className='HomePage CardListPage'>

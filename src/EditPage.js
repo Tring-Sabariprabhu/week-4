@@ -1,4 +1,5 @@
 import './EditPage.css';
+
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import DefaultImage from './Images/Banner.png';
 import { useContext, useEffect, useState } from 'react';
@@ -8,15 +9,21 @@ import { UserContext } from './UserContext';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { makeToast } from './MakeToast';
 
 
 export const EditPage=()=>{
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    console?.log('state--->',location?.state?.index);
     
     const URLStatus = useParams();       // Getting URL
  
-    const editPersonaKey = URLStatus.key == undefined ? undefined : Number.parseInt(URLStatus.key);      // Saving Persona key from the URL
+    // const editPersonaKey = URLStatus.key == undefined ? undefined : Number.parseInt(URLStatus.key);      // Saving Persona key from the URL
     
+    const editPersonaKey = location?.state ? location?.state?.index : undefined;
     const [ EditStatus, setEditStatus] = useState(false);                   // It declares Whether this page for Creation or Editing
     
     
@@ -31,14 +38,16 @@ export const EditPage=()=>{
     const [ DeleteCardState, setDeleteCardState] = useState(false);  // For Delete Card popup
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
-        defaultValues: { name: null, image: null, quote: null, description: null, attitudes: null, painpoints: null, jobs: null, activities: null}
+        defaultValues: { name: null, image: null, quote: null, description: null, attitudes: null, painpoints: null, jobs: null, activities: null},
+        mode: "onChange"
     });
 
+    
     useEffect( ()=>{
         if(user.name == null){
             navigate('/');
         }
-        else if(URLStatus.key == undefined){      // Create Persona 
+        else if(editPersonaKey == undefined){      // Create Persona 
             setEditStatus(false);
         }
       
@@ -59,7 +68,7 @@ export const EditPage=()=>{
 
 
     
-   
+    const ImageExist = (SavedImage!=null && SavedImage==ImageSelected);
     
     const DeletePopup=()=>{          // Deleting Persona Confirmation
         return(
@@ -79,10 +88,11 @@ export const EditPage=()=>{
     const EditPopup=()=>{                          // Image Preview for User
         return(
             <div className='Popup'>
+                <div onClick={()=>SetEditImgPopup(false)} className='close_button'>x</div>
                 <div className='Image_container' style={{backgroundImage: `url(${ImageSelected ? ImageSelected : DefaultImage})`,}}>
 
                 </div>
-                <button type='button' id='image_Browse_button' onClick={()=> document.getElementById('image_input').click()}> Browse</button>
+                <button type='button' id='image_Browse_button' onClick={()=> document.getElementById('image_input').click()} > Browse</button>
                 <input
                         type="file"
                         id='image_input'
@@ -93,11 +103,14 @@ export const EditPage=()=>{
                     />
                 <div className='Buttons_container'>
                     <div className='LeftSide'>
-                        {  (SavedImage!=null && SavedImage==ImageSelected ) &&
-                            <button type='button' className='Btn1' onClick={()=>SetImageRemoved()} >Delete</button>}
+                        
+                            <button type='button' className='Btn1' onClick={()=>SetImageRemoved()} 
+                                disabled={ (ImageExist) ? false : true} 
+                                style={{color:( (ImageExist) ? "red" : "gray" )}}
+                                >Delete</button>
                     </div>
                     <div className='RightSide'>
-                        <button type='button' onClick={()=>SetEditImgPopup(false)} className='Btn1'>Cancel</button>
+                        {/* <button type='button' onClick={()=>SetEditImgPopup(false)} className='Btn1'>Cancel</button> */}
                         <button type='button' onClick={()=>AfterClickSave() } className='button_color'>Save</button>
                     </div>
                 </div>
@@ -111,6 +124,7 @@ export const EditPage=()=>{
             setSavedImage(null);
             setImageSelected(null);   // Optional
             setEditImageState(false);            
+            makeToast('Image Deleted', 'success');
         }
     }
     const SetEditImgPopup=(BoolValue)=>{                       // Set Edit Image Popup
@@ -122,14 +136,14 @@ export const EditPage=()=>{
         setEditImageState(BoolValue);      
     }
 
-    const handleSelected=(event)=>{                              // Onchange event for Image  (After Choosing Image)
+    const handleSelected=(event)=>{                                  // Onchange event for Image  (After Choosing Image)
         const allowedExtensions = [".jpg", ".jpeg", ".png",".svg"];
         const ImgURL = (event.target.files[0].name);
         const ext = ImgURL.slice(ImgURL.indexOf("."));
         
         if(allowedExtensions.includes(ext) == false){
             setEditImageState(false);
-            alert("Invalid !!.  acceptable Image file Extensions are (.png, .jpg, .jpeg, .svg)");
+            makeToast('Valid Image file extensions (.jpg, .jpeg, .png, .svg)','error');
         }
         else{
             setImageSelected(URL.createObjectURL(event.target.files[0]));   // Store Selected Image Temporary
@@ -139,17 +153,18 @@ export const EditPage=()=>{
 
     const AfterClickSave=()=>{                          // After click Save in Image Preview
         if(ImageSelected == null && SavedImage == null){
-            alert("No Image Selected");
+            makeToast('No Image Selected', 'info');
         }
         else if(SavedImage && ImageSelected == SavedImage){
-            alert("Selected Image is already exist");
+            makeToast('Selected Image is already exist', 'info');
         }
         else if(ImageSelected){
             setSavedImage(ImageSelected);   // Save Selected Image
             setEditImageState(false);    // Hide Popup
+            makeToast('Image Saved', 'success');
         }
         else{
-            alert("Please select any Image file before click \'Save\'");
+            makeToast('Please select any Image file before click \'Save\'', 'info');
         }
     }
 
@@ -167,11 +182,12 @@ export const EditPage=()=>{
         if (EditStatus) {
             data.image = SavedImage;
             personas[editPersonaKey] = data;
+            makeToast("Changes Saved Successfully", 'success');
             navigate(-1);
-            
         } else {
             data.image = SavedImage;
             addPersona(data);
+            makeToast('Persona Created Successfully', 'success');
             navigate(-1);
         }
         
@@ -182,6 +198,7 @@ export const EditPage=()=>{
         deletePersona(editPersonaKey);
         setDeleteCardState(false);
         navigate(-1);
+        makeToast('Persona Deleted Successfully', 'success');
     }
 
     return(
@@ -203,14 +220,20 @@ export const EditPage=()=>{
                                 className="personaName"
                                 name='name'
                                 placeholder="Sample"
-                                {...register("name", {                             
-                                  pattern: {
-                                    value: /^[A-Za-z\s]*$/,
-                                    message: "Persona Name should only contain alphabets"
-                                  },
-                                  validate: {
-                                    requiredCheck: (value) =>   value?.length > 0 || "Persona Name is required"
-                                  }
+                                
+                                {...register("name", 
+                                    {                             
+                                        validate: {
+                                            requiredCheck: (value) =>   value?.length > 0 || "Persona Name is required",
+                                            checkMin: (value)=> value?.length <= 20 || "Persona Name Should contain 20 characters"
+                                          },
+                                        pattern: {
+                                            value: /^[A-Za-z\s]*$/,
+                                            message: "Persona Name should only contain alphabets"
+                                        },
+                                        
+                                  
+                                  
                                 })} 
                                 value={watch("name") || ""}
                                 // onChange={handleChange}
@@ -233,8 +256,8 @@ export const EditPage=()=>{
                     <textarea placeholder='Enter quote that identifies the persona' name='quote' 
                         {...register('quote', { 
                             pattern: {
-                                value: /^[A-Za-z\s]*$/,
-                                message: 'Quote should only contain alphabets'
+                                value: /^[A-Za-z!@#$%^&*(),.?":{}|<>-_+=\s"';:/~]*$/,
+                                message: 'Quote should only contain alphabets and special symbols'
                             }   
                         })} 
                         value={watch("quote") || ""}/>
@@ -245,9 +268,10 @@ export const EditPage=()=>{
                     <textarea placeholder='Enter a general description/bio about the persona' name='description' 
                         {...register('description', { 
                             pattern: {
-                                value: /^[A-Za-z\s]*$/,
-                                message: 'Description should only contain alphabets'
+                                value: /^[A-Za-z!@#$%^&*(),.?":{}|<>-_+=\s"';:/~]*$/,
+                                message: 'Description should only contain alphabets and special symbols'
                             }
+                            
                         })}
                         value={watch("description") || ""}/>
                         {errors.description && <span className='error_msg'>{errors.description.message}</span>}
@@ -257,8 +281,8 @@ export const EditPage=()=>{
                     <textarea placeholder='What drives and incentives the persona to reach desired goals? What mindset the persona have?' name='attitudes'  
                         {...register('attitudes', { 
                             pattern: {
-                                value: /^[A-Za-z\s]*$/,
-                                message: 'Attitudes should only contain alphabets'
+                                value: /^[A-Za-z!@#$%^&*(),.?":{}|<>-_+=\s"';:/~]*$/,
+                                message: 'Attitudes should only contain alphabets and special symbols'
                             }
                         })} 
                         value={watch("attitudes") || ""}/>

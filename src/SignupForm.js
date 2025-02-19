@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
+import { makeToast } from "./MakeToast";
 function SignupForm() {
     const navigate = useNavigate();
      const { setUser , SettingAuth } = useContext(UserContext);  
+     
   const {
     register,
     handleSubmit,
@@ -18,14 +20,14 @@ function SignupForm() {
     // localStorage.clear();
     
     if(localStorage && localStorage.getItem(data.email)){
-      alert("Email is already exist! Go to Login");
+      makeToast('Email is already exist! Go to Login', 'error');
     }
     else{
       const Obj = {name: data.name, password: data.password};
       localStorage.setItem(data.email, JSON.stringify(Obj));
-      alert("User details Registered");
+      makeToast('User details Registered', 'success');
       setUser({name : data.name, email : data.email});
-      navigate('/');
+      navigate('/persona');
     }
     
     
