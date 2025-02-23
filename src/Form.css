@@ -6,17 +6,17 @@
     /* margin-left: 20%; */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     border-radius: 2%;
 }
-/* .flex_row{
+.flex_row{
     display: flex;
     flex-direction: row;
 }
 .flex_column{
     display: flex;
     flex-direction: column;
-} */
+}
  table{
     background-color: rgb(255, 255, 255);
     width: 90%;
@@ -49,9 +49,12 @@ button{
     border-radius: 10%;
 }
 .addNewButton{
+    margin-left: 76%;
+    width: 8vw;
     background-color: rgb(51, 122, 246);
     padding: 1% 2%;
-    border-radius: 6%;
+    margin-bottom: 2%;
+    border-radius: 5%;
 }
 .addNewButton:hover{
     background-color: rgba(51, 122, 246, 0.546);
@@ -77,30 +80,54 @@ button{
 .PopupMessage > .button1{
     color: black;
 }
+.PopupMessage > div{
+    justify-content: space-between;
+    padding: 4% 8%;
+    /* background-color: aqua; */
+}
+.PopupMessage > div > .Label_div{
+
+    /* ba */
+    /* background-color: beige; */
+    height: 45vh;
+    justify-content: space-between;
+}
+.PopupMessage > div > .Label_div > label{
+    font-size: 1.9vw;
+    color: black;
+}
+.PopupMessage > div > .Input_div{
+    height: 45vh;
+    
+}
 .PopupMessage > button{
-    border-radius: 12%;
+    border-radius:8%;
     margin-right: 3%;
-    padding: 2.5%;
+    padding: 2.5% 4%;
 }
 .PopupMessage > label{
     color: black;
     font-size: 1.6vw;
 }
-.PopupMessage > input{
-    padding: 0 0 0 1%;
+ input{
+    padding: 2% 1%;
     font-size: 1.2vw;
     width: 13vw;
     height: 4vh;
+    /*   */
 }
+input:focus{
+    outline-color: rgb(42, 208, 237);
+}
+ 
 .PopupMessage {
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 48%;
     transform: translate(-50%, -50%);
     /* background-color: rgb(74, 184, 227); */
-    background-color: whitesmoke;
-    
+    background-color:beige;
     color: white;
     padding: 20px 30px;
     border-radius: 10px;
@@ -108,10 +135,5 @@ button{
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 30vw;
-    max-width: 90vw;
-    
-}
-.PopupMessage > .InputRow > input[type=text]{
-    width: 50%;
-    padding: 1% 0;
+    /* max-width: 90vw */
 }

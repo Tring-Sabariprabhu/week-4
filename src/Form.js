@@ -1,113 +1,213 @@
 import {useState} from 'react';
 import './Form.css';
 import { PopUp } from './PopUp';
+import { useForm } from 'react-hook-form';
+import { makeToast } from './MakeToast';
 export const Form=()=>{
     const [ inputBoxes, setInputBoxes] = useState([]);
-    const [ Obj , setObj] = useState({name: "" , age: "", skill: "",designation: "", address : ""});
-    const [ ObjIndex, setIndex] = useState(null);
+    const [ Index, setIndex] = useState(null);
     const [ addButtonState, setAddButtonState] = useState(false);
     const [ delButtonState, setDelButtonState] = useState(false);
     const [ editButtonState, setEditButtonState] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        reset,
+        formState: { errors },
+      } = useForm({defaultValues: {name: "" , age: "", skill: "",designation: "", address : ""}});
+
     const SetAddBtnState=(value)=>{
+        
         setAddButtonState(value);
-        setObj({name: "" , age: "", skill: "",designation: "", address : ""});
+        if(value){
+            reset({name: "" , age: "", designation: "", skill: "", address: ""});
+            console.log(Index);        
+        }
+        // setExistData({name: "" , age: "", skill: "",designation: "", address : ""});
     }
-    const SetEditBtnState=(value, ObjIndex)=>{
+    const SetEditBtnState=(value, EditIndex)=>{
         setEditButtonState(value);
         if(value){
-            setIndex(ObjIndex);
-            setObj(inputBoxes[ObjIndex]);
+            setIndex(EditIndex);
+            const ExistData = inputBoxes[EditIndex];
+            Object.keys(ExistData).forEach((key) => {
+                setValue(key, ExistData[key]); // Update form fields
+              });
         }
         else{
             setIndex(null);
         }
     }
-    
-    const SetDelBtnState=(value, ObjIndex)=>{
+    const SetDelBtnState=(value, DeleteIndex)=>{
         setDelButtonState(value);
         if(value){
-            setIndex(ObjIndex);
-            setObj(inputBoxes[ObjIndex]);
+            setIndex(DeleteIndex);
         }
         else{
             setIndex(null);
-            setObj({name: "" , age: "", skill: "",designation: "", address : ""});
         }
     }
     
-    const handleChange = (event) => {
-        setObj({...Obj, [event.target.name] :  event.target.value});
-    };
-    const AfterClickAdd=()=>{
-        setInputBoxes([...inputBoxes, Obj]) ;
-        SetAddBtnState(false);
-        setObj({name: "" , age: "", skill: "",designation: "", address : ""});
+   
+    const onSubmit = (data) => {
+        if(addButtonState){
+            setInputBoxes([...inputBoxes, data]) ;
+            makeToast('Record added','success');
+            setAddButtonState(false);
+        }
+        else if(editButtonState){
+            inputBoxes[Index] = data;
+            makeToast('Record updated','success');
+            setEditButtonState(false);
+        }
     }
-    const AfterClickEdit=()=>{
-        inputBoxes[ObjIndex].name = Obj.name;
-        inputBoxes[ObjIndex].age = Obj.age;
-        inputBoxes[ObjIndex].skill = Obj.skill;
-        inputBoxes[ObjIndex].designation = Obj.designation;
-        inputBoxes[ObjIndex].address = Obj.address;
-
-        SetEditBtnState(false, null);
-        setObj({name: "" , age: "", skill: "",designation: "", address : ""});
+    const ShowErrors=()=>{
+        if(errors.name)
+            makeToast(errors.name.message, 'error');
+       if(errors.age)
+           makeToast(errors.age.message, 'error');
+       if(errors.skill)
+           makeToast(errors.skill.message, 'error');
+       if(errors.designation)
+           makeToast(errors.designation.message, 'error');
+       if(errors.address)
+           makeToast(errors.address.message, 'error');
     }
+  
     const AfterDeleteClick=()=>{
         const OldInputBoxes = [...inputBoxes];
-        OldInputBoxes.splice(ObjIndex, 1);
+        OldInputBoxes.splice(Index, 1);
         setInputBoxes(OldInputBoxes);
+        makeToast('Record deleted','success');
         SetDelBtnState(false, null);
     };
  
     const OperationStart=()=>{
+        
         return(
             
-            <div className='PopupMessage'>
+            <form className='PopupMessage' onSubmit={handleSubmit(onSubmit)}>
                 { (editButtonState || addButtonState) && <>
-                    <label htmlFor='name'>Name : </label>
-                    <input type="text" onChange={handleChange} name="name" id='name' value={Obj.name}/><br/>
+                <div className='flex_row '>
+                    <div className='flex_column Label_div'>
+                        <label htmlFor='name'>Name </label>
+                    
+                        <label htmlFor='age'>Age </label>
+                    
+                        <label htmlFor='skill'>Skill </label>
+                    
+                        <label htmlFor='designation' >Designation </label>
+                    
+                        <label htmlFor='address' >Address </label>
+                    </div>
+                    <div className='flex_column Input_div'>
+                        <input type="text" name="name" id='name' value={watch("name") || ""}
+                                    {...register("name", {                             
+                                        pattern: {
+                                          value: /^[A-Za-z\s]*$/,
+                                          message: "Name should only contain alphabets",
+                                        },
+                                        validate: {
+                                          requiredCheck: (value) =>   value?.length > 0 || "Name is required",
+                                          SpacesContained: (value) => ( value?.trim()?.length > 0) || "Name Should be valid"
+                                        }
+                                      })} 
+                                    /><br/>
+                        
+                        <input type="text" name="age" id="age" value={watch("age") || ""}
+                                    {...register("age", {                             
+                                        pattern: {
+                                          value: /^[0-9]*$/,
+                                          message: "Age should be only numbers",
+                                        },
+                                        validate: {
+                                          requiredCheck: (value) =>   value?.length > 0 || "Age is required",
+                                          SpacesContained: (value) => ( value?.trim()?.length > 0) || "Age Should be valid"
+                                        }
+                                      })} 
+                                    /><br/>
+                        {/* { errors.name && console.log(errors.name)} */}
+                        <input type="text" name="skill" id="skill" value={watch("skill") || ""}
+                                    {...register("skill", {                             
+                                        pattern: {
+                                          value: /^[A-Za-z\s]*$/,
+                                          message: "Skill should only contain alphabets",
+                                        },
+                                        validate: {
+                                          requiredCheck: (value) =>   value?.length > 0 || "Skill is required",
+                                          SpacesContained: (value) => ( value?.trim()?.length > 0) || "Skill Should be valid"
+                                        }
+                                      })} 
+                                    /><br/>
+                        {/* { errors.name && console.log(errors.name)} */}
+                        <input type="text" name="designation" id="designation" value={watch("designation") || ""}
+                                    {...register("designation", {                             
+                                        pattern: {
+                                            value: /^[A-Za-z\s]*$/,
+                                            message: "Designation should only contain alphabets",
+                                          },
+                                        validate: {
+                                          requiredCheck: (value) =>   value?.length > 0 || "Designation is required",
+                                          SpacesContained: (value) => ( value?.trim()?.length > 0) || "Designation Should be valid"
+                                        }
+                                      })} 
+                                    /><br/>
+                        {/* { errors.name && console.log(errors.name)} */}
+                        <input type="text" name="address" id="address" value={watch("address") || ""}
+                                    {...register("address", {                             
+                                        validate: {
+                                          requiredCheck: (value) =>   value?.length > 0 || "Address is required",
+                                          SpacesContained: (value) => ( value?.trim()?.length > 0) || "Address Should be valid"
+                                        }
+                                      })} 
+                                    /><br/>
+                        {/* { errors.name && console.log(errors.name)} */}
+                    </div>
                 
-                    <label htmlFor='age'>Age : </label>
-                    <input type="number" onChange={handleChange} name="age" id="address" value={Obj.age}/><br/>
-                
-                    <label htmlFor='skill'>Skill : </label>
-                    <input type="text" onChange={handleChange} name="skill" id="address" value={Obj.skill}/><br/>
-                
-                
-                    <label htmlFor='designation' >Designation : </label>
-                    <input type="text" onChange={handleChange} name="designation" id="address" value={Obj.designation}/><br/>
-                
-                    <label htmlFor='address' >Address : </label>
-                    <input type="text" onChange={handleChange} name="address" id="address" value={Obj.address}/><br/>
-                
-                <br/></>}
+
+                </div>
+                </>}
 
                 
                 { addButtonState && <>
-                    <button onClick={AfterClickAdd} className='yellowButton button1'>Save</button>
-                    <button onClick={()=>SetAddBtnState(false)} className='button2 redButton'>Close</button>
+                    <button type='submit'
+                                    onClick={ShowErrors} 
+                                    className='yellowButton button1'>Save</button>
+                    <button type='button' 
+                                    onClick={()=>SetAddBtnState(false)}
+                                    className='button2 redButton'>Close</button>
                     </>}   
                     { editButtonState && <>
-                        <button onClick={()=>AfterClickEdit()} className='yellowButton button1'>Update</button>
-                        <button onClick={()=>SetEditBtnState(false)} className='button2 redButton'>Close</button>
+                        <button type='submit' 
+                                    onClick={ShowErrors} 
+                                    className='yellowButton button1'>Update</button>
+                        <button type='button' 
+                                    onClick={()=>SetEditBtnState(false, null)} 
+                                    className='button2 redButton'>Close</button>
                         </>}
                         {delButtonState && <>
-                                <label>Delete {Obj.name} record</label><br/><br/>
-                                <button onClick={()=>AfterDeleteClick()} className='yellowButton button1'>Confirm</button>
-                                <button onClick={()=>SetDelBtnState(false)} className='button2 redButton'>Cancel</button>
+                                <label>Delete record</label><br/><br/>
+                                <button type='button' 
+                                                onClick={()=>AfterDeleteClick()} 
+                                                className='yellowButton button1'>Confirm</button>
+                                <button type='button' 
+                                                onClick={()=>SetDelBtnState(false, null)} 
+                                                className='button2 redButton'>Cancel</button>
                                 </>}
               
-            </div>
+            </form>
         )
     }
    
     return(
         <div className='box-container'>
+            
             <button className='addNewButton' onClick={()=>SetAddBtnState(true)} > Add New</button>
             
             {
-                addButtonState == true && OperationStart()
+                addButtonState == true && OperationStart() 
             }
             
             <table>
