@@ -1,24 +1,12 @@
 .box-container{
-    background-color: whitesmoke;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    /* width: 60vw; */
     height: 80vh;
-    /* margin-left: 20%; */
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     border-radius: 2%;
 }
-.flex_row{
-    display: flex;
-    flex-direction: row;
-}
-.flex_column{
-    display: flex;
-    flex-direction: column;
-}
+
  table{
-    background-color: rgb(255, 255, 255);
     width: 90%;
  }
  
@@ -39,6 +27,7 @@ th {
 }
 
 button{
+    cursor: pointer;
     color: white;
     font-weight: 500;
     border: none;
@@ -59,81 +48,54 @@ button{
 .addNewButton:hover{
     background-color: rgba(51, 122, 246, 0.546);
 }
-.bluebutton{
-    background-color: rgba(33, 161, 167, 0.938);
-}
-.bluebutton:hover{
-    background-color: rgb(66, 230, 255);
-}
-.redButton{
-    background-color: rgb(248, 29, 29);
-}
-.redButton:hover{
-    background-color: rgb(202, 35, 35);
-}
-.PopupMessage > .yellowButton{
+
+ .yellowButton{
     background-color: rgb(255, 214, 32);
 }
-.PopupMessage > .yellowButton:hover{
+.yellowButton:hover{
     background-color: rgba(243, 206, 40, 0.823);
 }
-.PopupMessage > .button1{
+.PopupMessage > .Buttons > button{
     color: black;
 }
-.PopupMessage > div{
-    justify-content: space-between;
-    padding: 4% 8%;
-    /* background-color: aqua; */
-}
-.PopupMessage > div > .Label_div{
 
-    /* ba */
-    /* background-color: beige; */
-    height: 45vh;
-    justify-content: space-between;
-}
-.PopupMessage > div > .Label_div > label{
-    font-size: 1.9vw;
-    color: black;
-}
-.PopupMessage > div > .Input_div{
-    height: 45vh;
-    
-}
-.PopupMessage > button{
-    border-radius:8%;
-    margin-right: 3%;
-    padding: 2.5% 4%;
-}
-.PopupMessage > label{
-    color: black;
-    font-size: 1.6vw;
-}
- input{
-    padding: 2% 1%;
-    font-size: 1.2vw;
-    width: 13vw;
-    height: 4vh;
-    /*   */
-}
-input:focus{
-    outline-color: rgb(42, 208, 237);
-}
- 
 .PopupMessage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     position: fixed;
-    top: 50%;
-    left: 48%;
-    transform: translate(-50%, -50%);
-    /* background-color: rgb(74, 184, 227); */
-    background-color:beige;
-    color: white;
+    top: 5%;
+    left: 30%;
+    background-color:rgb(255, 255, 255);
     padding: 20px 30px;
     border-radius: 10px;
     font-size: 2vw;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 30vw;
-    /* max-width: 90vw */
+} 
+.PopupMessage > .Input-div{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 30px;
+}
+.PopupMessage > .Input-div > label{
+    font-size: 20px;
+    color: black;
+}
+.PopupMessage > .Input-div > input{
+    padding: 8px;
+}
+.PopupMessage > .Input-div > input:focus{
+    outline-color: rgb(42, 208, 237);
+}
+.PopupMessage > .Buttons > button{
+    border-radius:8%;
+    margin-right: 3%;
+    padding: 2.5% 4%;   
+}
+.error{
+    color: red;
+    font-size: 13px;
 }

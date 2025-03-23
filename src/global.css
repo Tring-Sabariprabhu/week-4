@@ -1,0 +1,12 @@
+.bluebutton{
+    background-color: rgba(33, 161, 167, 0.938);
+}
+.bluebutton:hover{
+    background-color: rgb(66, 230, 255);
+}
+.redButton{
+    background-color: rgb(248, 29, 29);
+}
+.redButton:hover{
+    background-color: rgb(202, 35, 35);
+}
