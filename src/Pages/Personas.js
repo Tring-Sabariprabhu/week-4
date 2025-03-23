@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import tringapps from './Images/tringapps.svg';
 import './Personas.css';
 import { useContext, useEffect } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from '../Context/UserContext.js';
 
 export const Personas=()=>{
     const navigate = useNavigate();
-    const { user,  personas, User} = useContext(UserContext);
+    const { user,  personas} = useContext(UserContext);
 
 
     const SetPersonaIndex=(index)=>{
@@ -42,13 +41,15 @@ export const Personas=()=>{
                 </div>
                 <div className='CardList' >
               
-                    {personas.length > 0 && personas.map((persona, index) => (
+                    {personas?.length > 0 && personas?.map((persona, index) => (
                         <div key={index} className="Card" onClick={()=>SetPersonaIndex(index)}>
-                            <div className="div1"  style={{
-                                                        background: persona.image ? `url(${persona.image}) center/100% no-repeat` : "white"
-                                                    }}>
-                                {/* <button onClick={()=>SavePersonaIndex(index)}>Edit</button> */}
-                                { persona.image==null && <p className='ImageNotFound'>No image</p>}
+                            <div className="div1"  
+                            style={{
+                                background: persona.image ? `url(${persona.image}) center/100% no-repeat` : "white"
+                                                    }}
+                                                    >
+
+                                {/* { persona.image==null && <p className='ImageNotFound'>No image</p>} */}
                             </div>
                             <div className="div2">
                                 <div className="Card_details">

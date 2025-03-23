@@ -1,11 +1,11 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { Personas } from './Personas';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import { EditPage } from './EditPage';
-import { Home } from './Home';
-import LoginForm from './Loginform';
-import SignupForm from './SignupForm';
+import { Personas } from './Pages/Personas.js';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { EditPage } from './Pages/EditPage.js';
+import { Home } from './Pages/Home.js';
+import LoginForm from './Authentication/Loginform.js';
+import SignupForm from './Authentication/SignupForm.js';
 
 
 function App() {

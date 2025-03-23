@@ -1,11 +1,9 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import tringapps from './Images/tringapps.svg';
+import { useNavigate } from 'react-router-dom';
 import './Personas.css';
 import './Home.css';
-import { UserContext } from './UserContext';
+import { UserContext } from '../Context/UserContext';
 import { useContext } from 'react';
-import { useEffect } from 'react';
-import { makeToast } from './MakeToast';
+import { makeToast } from '../Toast/MakeToast';
 
 export const Home=()=>{
     const navigate = useNavigate();
@@ -31,7 +29,7 @@ export const Home=()=>{
                             </>
                             :
                             <>
-                            <p>{user.name ? "Username : " + user.name : "No user found"}</p>
+                            <p className='username'>{user.name ? "Username : " + user.name : "No user found"}</p>
                             <button className='button_color' 
                                 onClick={()=>AfterClickLogout()}
                                 >Logout</button>

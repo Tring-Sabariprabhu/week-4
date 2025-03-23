@@ -1,33 +1,24 @@
 import './EditPage.css';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import DefaultImage from './Images/Banner.png';
+import { useLocation, useNavigate} from 'react-router-dom';
+import DefaultImage from '../Images/Banner.png';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { UserContext } from './UserContext';
-
-
+import { UserContext } from '../Context/UserContext';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { makeToast } from './MakeToast';
+import { makeToast } from '../Toast/MakeToast';
 
 
 export const EditPage=()=>{
     const navigate = useNavigate();
 
     const location = useLocation();
-
-    console?.log('state--->',location?.state?.index);
-    
-    const URLStatus = useParams();       // Getting URL
- 
-    // const editPersonaKey = URLStatus.key == undefined ? undefined : Number.parseInt(URLStatus.key);      // Saving Persona key from the URL
     
     const editPersonaKey = location?.state ? location?.state?.index : undefined;
     const [ EditStatus, setEditStatus] = useState(false);                   // It declares Whether this page for Creation or Editing
-    
-    
-    const { user, personas, addPersona,  deletePersona } = useContext(UserContext);
+       
+    const { user, personas, setEditedPersona, addPersona,  deletePersona } = useContext(UserContext);
     
 
     const [ SavedImage, setSavedImage] = useState(null);           // Storing Image using State
@@ -44,10 +35,12 @@ export const EditPage=()=>{
 
     
     useEffect( ()=>{
-        if(user.name == null){
+    
+        console.log("UseEffect Running..")
+        if(user?.name == null){
             navigate('/');
         }
-        else if(editPersonaKey == undefined){      // Create Persona 
+        else if(editPersonaKey === undefined){      // Create Persona 
             setEditStatus(false);
         }
       
@@ -64,11 +57,11 @@ export const EditPage=()=>{
             }    
         }
        
-    }, [URLStatus.key]);
+    }, []);
 
 
     
-    const ImageExist = (SavedImage!=null && SavedImage==ImageSelected);
+    const ImageExist = (SavedImage!=null && SavedImage===ImageSelected);
     
     const DeletePopup=()=>{          // Deleting Persona Confirmation
         return(
@@ -110,7 +103,6 @@ export const EditPage=()=>{
                                 >Delete</button>
                     </div>
                     <div className='RightSide'>
-                        {/* <button type='button' onClick={()=>SetEditImgPopup(false)} className='Btn1'>Cancel</button> */}
                         <button type='button' onClick={()=>AfterClickSave() } className='button_color'>Save</button>
                     </div>
                 </div>
@@ -138,24 +130,24 @@ export const EditPage=()=>{
 
     const handleSelected=(event)=>{                                  // Onchange event for Image  (After Choosing Image)
         const allowedExtensions = [".jpg", ".jpeg", ".png",".svg"];
-        const ImgURL = (event.target.files[0].name);
-        const ext = ImgURL.slice(ImgURL.indexOf("."));
+        const ImgURL = (event?.target?.files[0]?.name);
+        const ext = ImgURL?.slice(ImgURL.indexOf("."));
         
-        if(allowedExtensions.includes(ext) == false){
+        if(allowedExtensions.includes(ext) === false){
             setEditImageState(false);
-            makeToast('Valid Image file extensions (.jpg, .jpeg, .png, .svg)','error');
+            makeToast('Valid Image file extensions (.jpg, .jpeg, .png, .svg)','warning');
         }
         else{
-            setImageSelected(URL.createObjectURL(event.target.files[0]));   // Store Selected Image Temporary
+            setImageSelected(URL.createObjectURL(event?.target?.files[0]));   // Store Selected Image Temporary
         }
         
     }
 
     const AfterClickSave=()=>{                          // After click Save in Image Preview
-        if(ImageSelected == null && SavedImage == null){
+        if(ImageSelected == null && SavedImage === null){
             makeToast('No Image Selected', 'info');
         }
-        else if(SavedImage && ImageSelected == SavedImage){
+        else if(SavedImage && ImageSelected === SavedImage){
             makeToast('Selected Image is already exist', 'info');
         }
         else if(ImageSelected){
@@ -178,15 +170,15 @@ export const EditPage=()=>{
     const onSubmit = (data) => {                                    // After Submitting form
         // console.log(data);
         console.log("image : " + SavedImage);
-       
+        data.name = data.name.trim();
         if (EditStatus) {
             data.image = SavedImage;
-            personas[editPersonaKey] = data;
+            setEditedPersona(editPersonaKey, data);  // Save changes of Existing data
             makeToast("Changes Saved Successfully", 'success');
             navigate(-1);
         } else {
             data.image = SavedImage;
-            addPersona(data);
+            addPersona(data);                        // Save new Data
             makeToast('Persona Created Successfully', 'success');
             navigate(-1);
         }
@@ -200,9 +192,13 @@ export const EditPage=()=>{
         navigate(-1);
         makeToast('Persona Deleted Successfully', 'success');
     }
-
+    
+ 
+   
     return(
         <>
+       
+        
         {   
             EditImageState && EditPopup()                  // Edit Image Popup
            }
@@ -228,17 +224,16 @@ export const EditPage=()=>{
                                             checkMin: (value)=> value?.length <= 20 || "Persona Name Should contain 20 characters"
                                           },
                                         pattern: {
-                                            value: /^[A-Za-z\s]*$/,
-                                            message: "Persona Name should only contain alphabets"
-                                        },
-                                        
+                                            value: /^[A-Za-z\s{2,}]*$/,
+                                            message: "Persona Name should only contain alphabets "
+                                        }, 
                                   
                                   
                                 })} 
-                                value={watch("name") || ""}
+                                    
                                 // onChange={handleChange}
                                 
-                                autoComplete="off"
+                                
                                 />
                             {errors.name && <span className='error_msg'>{errors.name.message}</span>} 
                        
@@ -288,12 +283,13 @@ export const EditPage=()=>{
                         value={watch("attitudes") || ""}/>
                         {errors.attitudes && <span className='error_msg'>{errors.attitudes.message}</span>}
                 </div>
-                <div className='Input react_quill'>
+                <div className='Input react_quill'  >
                     <label>Pain Points</label><br/>
-                    <ReactQuill theme="snow"   value={watch("painpoints") || ""}
+                    <ReactQuill theme="snow"   value={watch("painpoints") || ""} 
                      placeholder='What are the biggest challenges that the persona faces in their job?' 
                      onChange={(value)=>handleQuillChange("painpoints", value)}
                      />
+                     
 
                 </div>
                 <div className='Input react_quill'>
